@@ -1,0 +1,5 @@
+version: '3'
+
+services:
+  gg-kong:
+    image: codejamninja/gg-kong:latest
