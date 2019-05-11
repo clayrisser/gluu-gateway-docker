@@ -26,6 +26,10 @@ push:
 run: build
 	@docker run --rm -it $(IMAGE):latest
 
+.PHONY: start
+start: build
+	@docker run --rm $(IMAGE):latest
+
 .PHONY: ssh
 ssh: build
 	@docker run --rm -it --entrypoint /bin/sh $(IMAGE):latest

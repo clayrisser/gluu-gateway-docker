@@ -35,4 +35,4 @@ ENV NODE_ENV=production
 
 EXPOSE 1338
 
-ENTRYPOINT ["/sbin/tini", "--", "sh", "-c", "/usr/local/sbin/entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/entrypoint.sh"]

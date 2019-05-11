@@ -6,6 +6,7 @@ services:
     ports:
       - 1338:1338
     links:
+      - oxd-server:oxd-server
       - postgres:postgres
 
   gg-kong:
