@@ -26,4 +26,13 @@ RUN chmod +x /usr/local/sbin/entrypoint.sh && \
   rm -rf /tmp/gluu-gateway && \
   apk del build-deps
 
-ENTRYPOINT ["tini", "--", "sh", "-c", "/usr/local/sbin/entrypoint.sh"]
+ENV DB_DATABASE=postgres
+ENV DB_HOST=postgres
+ENV DB_PASSWORD=postgres
+ENV DB_PORT=5432
+ENV DB_USER=postgres
+ENV NODE_ENV=production
+
+EXPOSE 1338
+
+ENTRYPOINT ["/sbin/tini", "--", "sh", "-c", "/usr/local/sbin/entrypoint.sh"]
