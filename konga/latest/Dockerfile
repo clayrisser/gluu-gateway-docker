@@ -28,6 +28,7 @@ RUN chmod +x /usr/local/sbin/entrypoint.sh && \
 
 ENV CLIENT_ID="" \
   CLIENT_SECRET="" \
+  CERT_PATH=/certs/tls.crt \
   COMMON_NAME=gluu.com \
   COUNTRY_NAME=US \
   DB_DATABASE=konga \
@@ -39,6 +40,7 @@ ENV CLIENT_ID="" \
   EMAIL=email@example.com \
   EXPLICIT_HOST=localhost \
   GG_VERSION=1.0 \
+  KEY_PATH=/certs/tls.key \
   KONG_ADMIN_URL=http://kong:8001 \
   LOCALITY=Austin \
   NODE_ENV=production \

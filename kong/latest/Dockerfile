@@ -16,12 +16,20 @@ COPY kong.toml /etc/confd/conf.d/kong.toml
 
 RUN chmod +x /usr/local/sbin/entrypoint.sh
 
-ENV KONG_DATABASE=postgres \
+ENV CERT_PATH=/certs/tls.crt \
+  COMMON_NAME=gluu.com \
+  COUNTRY_NAME=US \
+  EMAIL=email@example.com \
+  KEY_PATH=/certs/tls.key \
+  KONG_DATABASE=postgres \
   KONG_PG_DATABASE=postgres \
   KONG_PG_HOST=postgres \
   KONG_PG_PASSWORD=postgres \
   KONG_PG_PORT=5432 \
-  KONG_PG_USER=postgres
+  KONG_PG_USER=postgres \
+  LOCALITY=Austin \
+  ORGANIZATION_NAME=Gluu \
+  STATE=TX
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/entrypoint.sh"]
 CMD ["kong", "docker-start"]

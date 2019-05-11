@@ -38,7 +38,7 @@ module.exports = {
     secret: env.SECRET || ''
   },
   ssl: {
-    key: fs.readFileSync(path.resolve(__dirname, 'tls.key')),
-    cert: fs.readFileSync(path.resolve(__dirname, 'tls.crt'))
+    cert: fs.readFileSync(path.resolve(env.CERT_PATH || 'tls.crt')),
+    key: fs.readFileSync(path.resolve(env.KEY_PATH || 'tls.key'))
   }
 };
