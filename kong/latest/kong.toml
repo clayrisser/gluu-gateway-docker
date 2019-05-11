@@ -1,0 +1,3 @@
+[template]
+src = "kong.conf.tmpl"
+dest = "/etc/kong/kong.conf"

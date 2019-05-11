@@ -1,0 +1,15 @@
+log_level = debug
+plugins = correlation-id,pre-function,cors,rate-limiting,loggly,zipkin,request-size-limiting,azure-functions,request-transformer,response-transformer,ip-restriction,statsd,http-log,datadog,tcp-log,post-function,acl,prometheus,response-ratelimiting,udp-log,file-log,aws-lambda,syslog,bot-detection,request-termination,gluu-uma-pep,gluu-oauth-pep,gluu-metrics
+nginx_http_lua_shared_dict = gluu_metrics 5M
+proxy_listen = 0.0.0.0:8000, 0.0.0.0:443 ssl
+admin_listen = 127.0.0.1:8001, 127.0.0.1:8445 ssl
+ssl_cert = tls.crt
+ssl_cert_key = tls.key
+admin_ssl_cert = tls.crt
+admin_ssl_cert_key = tls.key
+database = {{ (getenv "KONG_DATABASE") }}
+pg_host = {{ (getenv "KONG_PG_HOST") }}
+pg_port = {{ (getenv "KONG_PG_PORT") }}
+pg_user = {{ (getenv "KONG_PG_USER") }}
+pg_password = {{ (getenv "KONG_PG_PASSWORD") }}
+pg_database = {{ (getenv "KONG_PG_DATABASE") }}
