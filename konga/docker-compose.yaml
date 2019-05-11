@@ -7,5 +7,6 @@ services:
       - 1338:1338
     links:
       - postgres:postgres
+
   postgres:
     image: postgres

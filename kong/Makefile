@@ -14,10 +14,6 @@ all: clean build
 build:
 	@docker-compose -f docker-build.yaml build
 
-.PHONY: clean
-clean:
-	@git clean -fXd
-
 .PHONY: pull
 pull:
 	@docker-compose -f docker-build.yaml pull

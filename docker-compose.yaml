@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  gg-konga:
+    image: codejamninja/gg-konga:latest
+    ports:
+      - 1338:1338
+    links:
+      - postgres:postgres
+
+  gg-kong:
+    image: codejamninja/gg-kong:latest
+    ports:
+      - 443:443
+      - 8000:8000
+      - 8001:8001
+    links:
+      - postgres:postgres
+      - oxd-server:oxd-server
+
+  oxd-server:
+    image: gluufederation/oxd-server:4.0
+    ports:
+      - 8443:8443
+
+  postgres:
+    image: postgres
