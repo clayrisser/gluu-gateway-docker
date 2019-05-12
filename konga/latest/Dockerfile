@@ -32,8 +32,6 @@ RUN chmod +x /usr/local/sbin/entrypoint.sh && \
 WORKDIR /opt/app
 
 ENV BASE_URL=https://localhost:1338 \
-  CLIENT_ID="" \
-  CLIENT_SECRET="" \
   COMMON_NAME=gluu.com \
   COUNTRY_NAME=US \
   DB_DATABASE=konga \
@@ -43,14 +41,12 @@ ENV BASE_URL=https://localhost:1338 \
   DB_SSL=false \
   DB_USER=postgres \
   EMAIL=email@example.com \
-  EXPLICIT_HOST=localhost \
   GG_VERSION=1.0 \
   KONG_ADMIN_URL=http://kong:8001 \
   LOCALITY=Austin \
   NODE_ENV=production \
   OP_HOST=https://op:8080 \
   ORGANIZATION_NAME=Gluu \
-  OXD_ID="" \
   OXD_VERSION=4.0 \
   OXD_WEB=https://oxd:8443 \
   PORT=1338 \
