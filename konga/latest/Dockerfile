@@ -16,11 +16,14 @@ RUN apk add --no-cache \
 RUN git clone https://github.com/GluuFederation/gluu-gateway.git && \
   cd gluu-gateway/konga && \
   yarn && \
+  yarn add cross-spawn && \
+  yarn add node-fetch && \
   mv /tmp/gluu-gateway/konga /opt/app
 
 COPY entrypoint.sh /usr/local/sbin/entrypoint.sh
 COPY konga_db.sql /opt/app/konga_db.sql
 COPY local.js /opt/app/config/local.js
+COPY start.js /opt/app/start.js
 
 RUN chmod +x /usr/local/sbin/entrypoint.sh && \
   rm -rf /tmp/gluu-gateway && \
@@ -28,9 +31,9 @@ RUN chmod +x /usr/local/sbin/entrypoint.sh && \
 
 WORKDIR /opt/app
 
-ENV CLIENT_ID="" \
+ENV BASE_URL=https://localhost:1338 \
+  CLIENT_ID="" \
   CLIENT_SECRET="" \
-  CERT_PATH=/certs/tls.crt \
   COMMON_NAME=gluu.com \
   COUNTRY_NAME=US \
   DB_DATABASE=konga \
@@ -42,15 +45,14 @@ ENV CLIENT_ID="" \
   EMAIL=email@example.com \
   EXPLICIT_HOST=localhost \
   GG_VERSION=1.0 \
-  KEY_PATH=/certs/tls.key \
   KONG_ADMIN_URL=http://kong:8001 \
   LOCALITY=Austin \
   NODE_ENV=production \
-  OP_HOST=http://op:8080 \
+  OP_HOST=https://op:8080 \
   ORGANIZATION_NAME=Gluu \
-  OXD_ID= \
+  OXD_ID="" \
   OXD_VERSION=4.0 \
-  OXD_WEB=http://oxd:8443 \
+  OXD_WEB=https://oxd:8443 \
   PORT=1338 \
   SECRET=some-secret \
   STATE=TX

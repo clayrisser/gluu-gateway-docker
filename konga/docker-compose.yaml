@@ -5,6 +5,8 @@ services:
     image: codejamninja/gg-konga:latest
     ports:
       - 1338:1338
+    environment:
+      OP_HOST: https://samples.auth0.com
     links:
       - gg-kong:kong
       - oxd-server:oxd

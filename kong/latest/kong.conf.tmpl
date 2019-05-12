@@ -1,4 +1,4 @@
-admin_listen = 127.0.0.1:8001, 127.0.0.1:8445 ssl
+admin_listen = 0.0.0.0:8001, 0.0.0.0:8445 ssl
 admin_ssl_cert = {{ (getenv "CERT_PATH") }}
 admin_ssl_cert_key = {{ (getenv "KEY_PATH") }}
 database = {{ (getenv "KONG_DATABASE") }}

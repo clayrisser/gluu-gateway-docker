@@ -10,6 +10,7 @@ module.exports = {
   explicitHost: env.EXPLICIT_HOST || 'localhost',
   ggVersion: env.GG_VERSION || '1.0',
   hookTimeout: 180000,
+  host: '0.0.0.0',
   kong_admin_url: process.env.KONG_ADMIN_URL || 'http://localhost:8001',
   opHost: env.OP_HOST || 'http://localhost:8080',
   oxdId: env.OXD_ID || '',
@@ -36,9 +37,5 @@ module.exports = {
   },
   session: {
     secret: env.SECRET || ''
-  },
-  ssl: {
-    cert: fs.readFileSync(path.resolve(env.CERT_PATH || 'tls.crt')),
-    key: fs.readFileSync(path.resolve(env.KEY_PATH || 'tls.key'))
   }
 };
