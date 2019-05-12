@@ -35,12 +35,15 @@ function main() {
   })
     .then(res => {
       if (res.ok) {
-        return res.text().then(body => {
-          env.OXD_ID = body.oxd_id;
-          env.CLIENT_SECRET = body.client_secret;
-          env.CLIENT_ID = body.client_id;
+        return res.json().then(body => {
           spawn.sync('/bin/sh', ['/opt/app/start.sh'], {
-            stdio: 'inherit'
+            stdio: 'inherit',
+            env: {
+              ...process.env,
+              CLIENT_ID: body.client_id,
+              CLIENT_SECRET: body.client_secret,
+              OXD_ID: body.oxd_id
+            }
           });
         });
       }

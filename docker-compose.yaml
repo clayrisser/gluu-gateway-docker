@@ -4,7 +4,7 @@ services:
   gg-konga:
     image: codejamninja/gg-konga:latest
     environment:
-      OP_HOST: https://samples.auth0.com
+      OP_HOST: https://accounts.gluu.org/oxauth
     ports:
       - 1338:1338
     links:
@@ -24,7 +24,7 @@ services:
     image: gluufederation/oxd-server:4.0
     environment:
       PROTECT_COMMANDS_WITH_ACCESS_TOKEN: 'true'
-      DEFAULT_SITE_CONFIG_OP_HOST: https://samples.auth0.com
+      DEFAULT_SITE_CONFIG_OP_HOST: https://accounts.gluu.org/oxauth
 
   postgres:
     image: postgres
