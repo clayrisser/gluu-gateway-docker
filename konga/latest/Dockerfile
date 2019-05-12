@@ -18,8 +18,9 @@ RUN git clone https://github.com/GluuFederation/gluu-gateway.git && \
   yarn && \
   mv /tmp/gluu-gateway/konga /opt/app
 
-COPY local.js /opt/app/config/local.js
 COPY entrypoint.sh /usr/local/sbin/entrypoint.sh
+COPY konga_db.sql /opt/app/konga_db.sql
+COPY local.js /opt/app/config/local.js
 
 RUN chmod +x /usr/local/sbin/entrypoint.sh && \
   rm -rf /tmp/gluu-gateway && \

@@ -6,7 +6,8 @@ services:
     ports:
       - 1338:1338
     links:
-      - oxd-server:oxd-server
+      - gg-kong:kong
+      - oxd-server:oxd
       - postgres:postgres
     volumes:
       - certs:/certs
@@ -19,7 +20,6 @@ services:
       - 8001:8001
     links:
       - postgres:postgres
-      - oxd-server:oxd-server
     volumes:
       - certs:/certs
 
@@ -27,9 +27,15 @@ services:
     image: gluufederation/oxd-server:4.0
     ports:
       - 8443:8443
+      - 8444:8444
+    environment:
+      PROTECT_COMMANDS_WITH_ACCESS_TOKEN: 'true'
+      DEFAULT_SITE_CONFIG_OP_HOST: http://localhost:8080
 
   postgres:
     image: postgres
+    ports:
+      - 5432:5432
 
 volumes:
   certs:

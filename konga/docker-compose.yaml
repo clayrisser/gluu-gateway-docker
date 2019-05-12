@@ -1,19 +1,18 @@
 version: '3'
 
 services:
-  konga:
+  gg-konga:
     image: codejamninja/gg-konga:latest
     ports:
       - 1338:1338
     links:
-      - kong:kong
-      - op:op
-      - oxd:oxd
+      - gg-kong:kong
+      - oxd-server:oxd
       - postgres:postgres
     volumes:
       - certs:/certs
 
-  kong:
+  gg-kong:
     image: codejamninja/gg-kong:latest
     ports:
       - 443:443
@@ -21,22 +20,22 @@ services:
       - 8001:8001
     links:
       - postgres:postgres
-      - oxd:oxd
     volumes:
       - certs:/certs
 
-  oxd:
+  oxd-server:
     image: gluufederation/oxd-server:4.0
     ports:
       - 8443:8443
-
-  op:
-    image: gluufederation/oxauth:3.1.5_04
-    ports:
-      - 8080:8080
+      - 8444:8444
+    environment:
+      PROTECT_COMMANDS_WITH_ACCESS_TOKEN: 'true'
+      DEFAULT_SITE_CONFIG_OP_HOST: http://localhost:8080
 
   postgres:
     image: postgres
+    ports:
+      - 5432:5432
 
 volumes:
   certs:
