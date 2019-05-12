@@ -3,39 +3,28 @@ version: '3'
 services:
   gg-konga:
     image: codejamninja/gg-konga:latest
+    environment:
+      OP_HOST: https://samples.auth0.com
     ports:
       - 1338:1338
     links:
       - gg-kong:kong
       - oxd-server:oxd
       - postgres:postgres
-    volumes:
-      - certs:/certs
 
   gg-kong:
     image: codejamninja/gg-kong:latest
     ports:
       - 443:443
       - 8000:8000
-      - 8001:8001
     links:
       - postgres:postgres
-    volumes:
-      - certs:/certs
 
   oxd-server:
     image: gluufederation/oxd-server:4.0
-    ports:
-      - 8443:8443
-      - 8444:8444
     environment:
       PROTECT_COMMANDS_WITH_ACCESS_TOKEN: 'true'
-      DEFAULT_SITE_CONFIG_OP_HOST: http://localhost:8080
+      DEFAULT_SITE_CONFIG_OP_HOST: https://samples.auth0.com
 
   postgres:
     image: postgres
-    ports:
-      - 5432:5432
-
-volumes:
-  certs:
