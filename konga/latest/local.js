@@ -7,7 +7,6 @@ module.exports = {
   clientId: env.CLIENT_ID || '',
   clientSecret: env.CLIENT_SECRET || 'some-secret',
   environment: env.NODE_ENV || 'development',
-  explicitHost: env.EXPLICIT_HOST || 'localhost',
   ggVersion: env.GG_VERSION || '1.0',
   hookTimeout: 180000,
   host: '0.0.0.0',
