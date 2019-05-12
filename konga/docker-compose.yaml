@@ -10,6 +10,8 @@ services:
       - op:op
       - oxd:oxd
       - postgres:postgres
+    volumes:
+      - certs:/certs
 
   kong:
     image: codejamninja/gg-kong:latest
@@ -20,6 +22,8 @@ services:
     links:
       - postgres:postgres
       - oxd:oxd
+    volumes:
+      - certs:/certs
 
   oxd:
     image: gluufederation/oxd-server:4.0
@@ -33,3 +37,6 @@ services:
 
   postgres:
     image: postgres
+
+volumes:
+  certs:

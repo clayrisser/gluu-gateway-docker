@@ -13,6 +13,6 @@ confd -onetime -backend env
 
 sleep 5
 psql -h "$KONG_PG_HOST" -U "$KONG_PG_USER" -c "CREATE DATABASE $KONG_PG_DATABASE;"
-/docker-entrypoint.sh kong migrations bootstrap
+/docker-entrypoint.sh kong migrations up
 
 exec /docker-entrypoint.sh "$@"

@@ -18,14 +18,14 @@ RUN git clone https://github.com/GluuFederation/gluu-gateway.git && \
   yarn && \
   mv /tmp/gluu-gateway/konga /opt/app
 
-WORKDIR /opt/app
-
 COPY local.js /opt/app/config/local.js
 COPY entrypoint.sh /usr/local/sbin/entrypoint.sh
 
 RUN chmod +x /usr/local/sbin/entrypoint.sh && \
   rm -rf /tmp/gluu-gateway && \
   apk del build-deps
+
+WORKDIR /opt/app
 
 ENV CLIENT_ID="" \
   CLIENT_SECRET="" \

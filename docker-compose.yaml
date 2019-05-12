@@ -8,6 +8,8 @@ services:
     links:
       - oxd-server:oxd-server
       - postgres:postgres
+    volumes:
+      - certs:/certs
 
   gg-kong:
     image: codejamninja/gg-kong:latest
@@ -18,6 +20,8 @@ services:
     links:
       - postgres:postgres
       - oxd-server:oxd-server
+    volumes:
+      - certs:/certs
 
   oxd-server:
     image: gluufederation/oxd-server:4.0
@@ -26,3 +30,6 @@ services:
 
   postgres:
     image: postgres
+
+volumes:
+  certs:
