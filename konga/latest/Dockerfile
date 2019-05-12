@@ -11,6 +11,7 @@ RUN apk add --no-cache --virtual build-deps \
 RUN apk add --no-cache \
   ca-certificates \
   openssl \
+  postgresql-client \
   tini
 RUN git clone https://github.com/GluuFederation/gluu-gateway.git && \
   cd gluu-gateway/konga && \

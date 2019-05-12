@@ -9,4 +9,7 @@ if [ ! -f "$CERT_PATH" ]; then
           "/C=$COUNTRY_NAME/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION_NAME/CN=$COMMON_NAME/emailAddress=$EMAIL"
 fi
 
+sleep 5
+psql -h "$DB_HOST" -U "$DB_USER" -c "CREATE DATABASE $DB_DATABASE;"
+
 exec /bin/sh /opt/app/start.sh "$@"
