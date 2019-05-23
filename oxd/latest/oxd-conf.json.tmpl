@@ -1,0 +1,51 @@
+trust_store_password: {{ (getenv "TRUST_STORE_PASSWORD") }}
+crypt_provider_key_store_path: {{ (getenv "CRYPT_PROVIDER_KEY_STORE_PATH") }}
+crypt_provider_key_store_password: {{ (getenv "CRYPT_PROVIDER_KEY_STORE_PASSWORD") }}
+crypt_provider_dn_name: {{ (getenv "CRYPT_PROVIDER_DN_NAME") }}
+support-google-logout: {{ (getenv "SUPPORT_GOOGLE_LOGOUT") }}
+state_expiration_in_minutes: {{ (getenv "STATE_EXPIRATION_IN_MINUTES") }}
+nonce_expiration_in_minutes: {{ (getenv "NONCE_EXPIRATION_IN_MINUTES") }}
+public_op_key_cache_expiration_in_minutes: {{ (getenv "PUBLIC_OP_KEY_CACHE_EXPIRATION_IN_MINUTES") }}
+protect_commands_with_access_token: {{ (getenv "PROTECT_COMMANDS_WITH_ACCESS_TOKEN") }}
+uma2_auto_register_claims_gathering_endpoint_as_redirect_uri_of_client: {{ (getenv "UMA2_AUTO_REGISTER_CLAIMS_GATHERING_ENDPOINT_AS_REDIRECT_URI_OF_CLIENT") }}
+migration_source_folder_path: {{ (getenv "MIGRATION_SOURCE_FOLDER_PATH") }}
+storage: {{ (getenv "STORAGE") }}
+storage_configuration:
+  dbFileLocation: {{ (getenv "DB_FILE_LOCATION") }}
+server:
+  applicationConnectors:
+    - type: https
+      port: {{ (getenv "APPLICATION_CONNECTOR_HTTPS_PORT") }}
+      keyStorePath: {{ (getenv "APPLICATION_KEYSTORE_PATH") }}
+      keyStorePassword: {{ (getenv "APPLICATION_KEYSTORE_PASSWORD") }}
+      validateCerts: {{ (getenv "APPLICATION_KEYSTORE_VALIDATE_CERTS") }}
+  adminConnectors:
+    - type: https
+      port: {{ (getenv "ADMIN_CONNECTOR_HTTPS_PORT") }}
+      keyStorePath: {{ (getenv "ADMIN_KEYSTORE_PATH") }}
+      keyStorePassword: {{ (getenv "ADMIN_KEYSTORE_PASSWORD") }}
+      validateCerts: {{ (getenv "ADMIN_KEYSTORE_VALIDATE_CERTS") }}
+logging:
+  loggers:
+    org.gluu: {{ (getenv "GLUU_LOG_LEVEL") }}
+    org.gluu: {{ (getenv "XDI_LOG_LEVEL") }}
+  appenders:
+    - type: console
+    - type: file
+      threshold: {{ (getenv "THRESHOLD") }}
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+      currentLogFilename: {{ (getenv "CURRENT_LOG_FILENAME") }}
+      archivedLogFilenamePattern: /var/log/oxd-server/oxd-server-%d{yyyy-MM-dd}-%i.log.gz
+      archivedFileCount: {{ (getenv "ARCHIVED_FILE_COUNT") }}
+      timeZone: {{ (getenv "TIME_ZONE") }}
+      maxFileSize: {{ (getenv "MAX_FILE_SIZE") }}
+defaultSiteConfig:
+  op_host: '{{ (getenv "DEFAULT_SITE_CONFIG_OP_HOST") }}'
+  op_discovery_path: '{{ (getenv "DEFAULT_SITE_CONFIG_OP_DISCOVERY_PATH") }}'
+  response_types: {{ (getenv "DEFAULT_SITE_CONFIG_RESPONSE_TYPES") }}
+  grant_type: {{ (getenv "DEFAULT_SITE_CONFIG_GRANT_TYPES") }}
+  acr_values: {{ (getenv "DEFAULT_SITE_CONFIG_ACR_VALUES") }}
+  scope: {{ (getenv "DEFAULT_SITE_CONFIG_SCOPE") }}
+  ui_locales: {{ (getenv "DEFAULT_SITE_CONFIG_UI_LOCALES") }}
+  claims_locales: {{ (getenv "DEFAULT_SITE_CONFIG_CLAIMS_LOCALES") }}
+  contacts: {{ (getenv "DEFAULT_SITE_CONFIG_CONTACTS") }}

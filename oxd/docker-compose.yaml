@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  oxd:
+    image: codejamninja/oxd:latest
+    ports:
+      - 443:443
+      - 8000:8000
+    links:
+      - postgres:postgres
+
+  postgres:
+    image: postgres
