@@ -21,9 +21,11 @@ services:
       - postgres:postgres
 
   oxd-server:
-    image: gluufederation/oxd-server:4.0
+    image: codejamninja/oxd:latest
+    ports:
+      - 8443:8443
+      - 8444:8444
     environment:
-      PROTECT_COMMANDS_WITH_ACCESS_TOKEN: 'true'
       DEFAULT_SITE_CONFIG_OP_HOST: https://accounts.gluu.org/oxauth
 
   postgres:

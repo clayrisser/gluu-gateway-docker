@@ -4,10 +4,7 @@ services:
   oxd:
     image: codejamninja/oxd:latest
     ports:
-      - 443:443
-      - 8000:8000
-    links:
-      - postgres:postgres
-
-  postgres:
-    image: postgres
+      - 8443:8443
+      - 8444:8444
+    environment:
+      DEFAULT_SITE_CONFIG_OP_HOST: https://accounts.gluu.org/oxauth

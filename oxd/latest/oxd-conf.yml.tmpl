@@ -1,0 +1,44 @@
+crypt_provider_dn_name: '{{ (getenv "CRYPT_PROVIDER_DN_NAME") }}'
+crypt_provider_key_store_password: '{{ (getenv "CRYPT_PROVIDER_KEY_STORE_PASSWORD") }}'
+crypt_provider_key_store_path: '{{ (getenv "CRYPT_PROVIDER_KEY_STORE_PATH") }}'
+migration_source_folder_path: '{{ (getenv "MIGRATION_SOURCE_FOLDER_PATH") }}'
+nonce_expiration_in_minutes: {{ (getenv "NONCE_EXPIRATION_IN_MINUTES") }}
+protect_commands_with_access_token: {{ (toLower (getenv "PROTECT_COMMANDS_WITH_ACCESS_TOKEN")) }}
+public_op_key_cache_expiration_in_minutes: {{ (getenv "PUBLIC_OP_KEY_CACHE_EXPIRATION_IN_MINUTES") }}
+state_expiration_in_minutes: {{ (getenv "STATE_EXPIRATION_IN_MINUTES") }}
+storage: '{{ (getenv "STORAGE") }}'
+support-google-logout: {{ (toLower (getenv "SUPPORT_GOOGLE_LOGOUT")) }}
+trust_store_password: '{{ (getenv "TRUST_STORE_PASSWORD") }}'
+uma2_auto_register_claims_gathering_endpoint_as_redirect_uri_of_client: {{ (toLower (getenv "UMA2_AUTO_REGISTER_CLAIMS_GATHERING_ENDPOINT_AS_REDIRECT_URI_OF_CLIENT")) }}
+storage_configuration:
+  dbFileLocation: '{{ (getenv "DB_FILE_LOCATION") }}'
+server:
+  applicationConnectors:
+    - type: https
+      keyStorePassword: '{{ (getenv "APPLICATION_KEYSTORE_PASSWORD") }}'
+      keyStorePath: '{{ (getenv "APPLICATION_KEYSTORE_PATH") }}'
+      port: {{ (getenv "APPLICATION_CONNECTOR_HTTPS_PORT") }}
+      validateCerts: {{ (toLower (getenv "APPLICATION_KEYSTORE_VALIDATE_CERTS")) }}
+  adminConnectors:
+    - type: https
+      keyStorePassword: '{{ (getenv "ADMIN_KEYSTORE_PASSWORD") }}'
+      keyStorePath: '{{ (getenv "ADMIN_KEYSTORE_PATH") }}'
+      port: {{ (getenv "ADMIN_CONNECTOR_HTTPS_PORT") }}
+      validateCerts: {{ (toLower (getenv "ADMIN_KEYSTORE_VALIDATE_CERTS")) }}
+logging:
+  level: INFO
+  loggers:
+    org.gluu: TRACE
+    org.xdi: TRACE
+  appenders:
+    - type: console
+defaultSiteConfig:
+  acr_values: {{ (getenv "ACR_VALUES") }}
+  claims_locales: {{ (getenv "CLAIMS_LOCALES") }}
+  contacts: {{ (getenv "CONTACTS") }}
+  grant_type: {{ (getenv "GRANT_TYPE") }}
+  op_discovery_path: '{{ (getenv "OP_DISCOVERY_PATH") }}'
+  op_host: '{{ (getenv "OP_HOST") }}'
+  response_types: {{ (getenv "RESPONSE_TYPES") }}
+  scope: {{ (getenv "SCOPE") }}
+  ui_locales: {{ (getenv "UI_LOCALES") }}

@@ -1,69 +1,64 @@
-FROM ubuntu:16.04
+FROM openjdk:8-jre-alpine3.9
 
-LABEL image=codejamninja/gg-kong:latest \
+LABEL image=codejamninja/oxd:latest \
   maintainer="Jam Risser <jam@codejam.ninja>" \
-  base=ubuntu:16.04
+  base=alpine:3.9
 
 WORKDIR /tmp
 
-RUN apt-get update && apt-get install -y \
-  apt-transport-https \
-  curl \
-  openjdk-8-jre
-RUN echo "deb https://repo.gluu.org/ubuntu/ xenial main" > /etc/apt/sources.list.d/gluu-repo.list && \
-  curl https://repo.gluu.org/ubuntu/gluu-apt.key | apt-key add - && \
-  apt-get update && apt-get install -y \
-  oxd-server
-RUN curl -L -o tini.deb http://archive.ubuntu.com/ubuntu/pool/universe/t/tini/tini_0.18.0-1_amd64.deb && \
-  dpkg -i tini.deb
+RUN apk add --no-cache --virtual build-deps \
+  curl
+RUN apk add --no-cache \
+  tini
 RUN curl -L -o /usr/local/bin/confd \
   https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64 && \
   chmod +x /usr/local/bin/confd
 
+WORKDIR /opt/oxd-server
+
+RUN curl -LO http://ox.gluu.org/maven/org/xdi/oxd-server/4.0-SNAPSHOT/oxd-server-4.0-SNAPSHOT.jar && \
+  curl -LO http://ox.gluu.org/maven/org/bouncycastle/bcprov-jdk15on/1.54/bcprov-jdk15on-1.54.jar && \
+  curl -LO https://github.com/GluuFederation/oxd/raw/version_4.0/oxd-server/src/main/resources/oxd-server.keystore
+
 COPY entrypoint.sh /usr/local/sbin/entrypoint.sh
-COPY oxd-conf.json.tmpl /etc/confd/templates/oxd-conf.json.tmpl
+COPY oxd-conf.yml.tmpl /etc/confd/templates/oxd-conf.yml.tmpl
 COPY oxd.toml /etc/confd/conf.d/oxd.toml
 
 RUN chmod +x /usr/local/sbin/entrypoint.sh && \
-  rm -rf /tmp/*
+  rm -rf /tmp/* && \
+  apk del build-deps
 
-ENV ADMIN_CONNECTOR_HTTPS_PORT="" \
-  ADMIN_KEYSTORE_PASSWORD="" \
-  ADMIN_KEYSTORE_PATH="" \
-  ADMIN_KEYSTORE_VALIDATE_CERTS="" \
-  APPLICATION_CONNECTOR_HTTPS_PORT="" \
-  APPLICATION_KEYSTORE_PASSWORD="" \
-  APPLICATION_KEYSTORE_PATH="" \
-  APPLICATION_KEYSTORE_VALIDATE_CERTS="" \
-  ARCHIVED_FILE_COUNT="" \
+ENV ACR_VALUES="['']" \
+  ADMIN_CONNECTOR_HTTPS_PORT=8444 \
+  ADMIN_KEYSTORE_PASSWORD=example \
+  ADMIN_KEYSTORE_PATH=/opt/oxd-server/oxd-server.keystore \
+  ADMIN_KEYSTORE_VALIDATE_CERTS=false \
+  APPLICATION_CONNECTOR_HTTPS_PORT=8443 \
+  APPLICATION_KEYSTORE_PASSWORD=example \
+  APPLICATION_KEYSTORE_PATH=/opt/oxd-server/oxd-server.keystore \
+  APPLICATION_KEYSTORE_VALIDATE_CERTS=false \
+  CLAIMS_LOCALES="['en']" \
+  CONTACTS="[]" \
   CRYPT_PROVIDER_DN_NAME="" \
   CRYPT_PROVIDER_KEY_STORE_PASSWORD="" \
   CRYPT_PROVIDER_KEY_STORE_PATH="" \
-  CURRENT_LOG_FILENAME="" \
-  DB_FILE_LOCATION="" \
-  DEFAULT_SITE_CONFIG_ACR_VALUES="" \
-  DEFAULT_SITE_CONFIG_CLAIMS_LOCALES="" \
-  DEFAULT_SITE_CONFIG_CONTACTS="" \
-  DEFAULT_SITE_CONFIG_GRANT_TYPES="" \
-  DEFAULT_SITE_CONFIG_RESPONSE_TYPES="" \
-  DEFAULT_SITE_CONFIG_SCOPE="" \
-  DEFAULT_SITE_CONFIG_UI_LOCALES="" \
-  GLUU_LOG_LEVEL="" \
-  MAX_FILE_SIZE="" \
+  DB_FILE_LOCATION=/opt/oxd-server/data/oxd_db \
+  GRANT_TYPE="['authorization_code']" \
   MIGRATION_SOURCE_FOLDER_PATH="" \
-  NONCE_EXPIRATION_IN_MINUTES="" \
-  PROTECT_COMMANDS_WITH_ACCESS_TOKEN="" \
-  PUBLIC_OP_KEY_CACHE_EXPIRATION_IN_MINUTES="" \
-  STATE_EXPIRATION_IN_MINUTES="" \
-  STORAGE="" \
-  SUPPORT_GOOGLE_LOGOUT="" \
-  THRESHOLD="" \
-  TIME_ZONE="" \
+  NONCE_EXPIRATION_IN_MINUTES=5 \
+  OP_DISCOVERY_PATH="" \
+  OP_HOST=https://accounts.gluu.org/oxauth \
+  PROTECT_COMMANDS_WITH_ACCESS_TOKEN=true \
+  PUBLIC_OP_KEY_CACHE_EXPIRATION_IN_MINUTES=60 \
+  RESPONSE_TYPES="['code']" \
+  SCOPE="['openid', 'profile', 'email']" \
+  STATE_EXPIRATION_IN_MINUTES=5 \
+  STORAGE=h2 \
+  SUPPORT_GOOGLE_LOGOUT=true \
   TRUST_STORE_PASSWORD="" \
-  UMA2_AUTO_REGISTER_CLAIMS_GATHERING_ENDPOINT_AS_REDIRECT_URI_OF_CLIENT="" \
-  XDI_LOG_LEVEL=""
+  UI_LOCALES="['en']" \
+  UMA2_AUTO_REGISTER_CLAIMS_GATHERING_ENDPOINT_AS_REDIRECT_URI_OF_CLIENT=true
 
 EXPOSE 8443 8444
 
-ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/sbin/entrypoint.sh"]
-CMD ["hello", "world"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/entrypoint.sh"]
