@@ -26,7 +26,7 @@ services:
       - 8443:8443
       - 8444:8444
     environment:
-      DEFAULT_SITE_CONFIG_OP_HOST: https://accounts.gluu.org/oxauth
+      OP_HOST: https://accounts.gluu.org/oxauth
 
   postgres:
     image: postgres
