@@ -4,6 +4,8 @@
 
 > run gluu-gateway from a docker container
 
+![](assets/gluu-gateway-docker.png)
+
 Please ★ this repo if you found it useful ★ ★ ★
 
 
